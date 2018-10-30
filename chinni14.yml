@@ -1,0 +1,13 @@
+---
+- hosts: server1
+  become: yes
+  tasks:
+    - name: get file
+      block:
+        - get_url:
+          url: "http://172.31.31.19/index.html"
+          dest: "/home/ansible/output.txt"
+      rescue:
+        - debug: msg=" The file not exist"
+      always:
+        - debug: msg=" Play is done"

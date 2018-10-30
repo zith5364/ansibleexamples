@@ -1,0 +1,11 @@
+---
+- hosts: local
+  become: yes
+  tasks:
+    - name: installing httpd
+      yum:
+        name: httpd
+        state: absent
+      register: var
+    - name: dispplay result
+      debug: msg="debug info is {{var}}"

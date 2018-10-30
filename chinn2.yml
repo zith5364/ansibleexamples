@@ -1,0 +1,19 @@
+---
+- hosts: local
+  become: yes
+  tasks:
+     - name: creating file under root directory
+       file:
+         path: /root/jithu.htm
+         state: touch
+       register: output
+     - name: display the result
+       debug: msg="debug info is {{ output }}"
+     - name: creating user in linux
+       user:
+         name: jithen
+       register: jithen
+     - name: display the rresult
+       debug: msg="debug info is {{ jithen }}"
+
+    

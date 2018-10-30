@@ -1,0 +1,29 @@
+---
+- hosts: local
+  become: yes
+  handlers:
+    - name: restart httpd
+      service:
+        name: httpd
+        state: restarted
+      listen: "restart httpd"
+    - name: adding line
+      lineinfile:
+        path: /home/ansible/chinnilove.txt
+        line: "I love you chinnii"
+      listen: "add line"
+  tasks:
+    - name: installing httpd
+      yum:
+        name: httpd
+        state: present
+      notify: "restart httpd"
+    - name: creating file under home
+      file:
+        path: /home/ansible/chinnilove.txt
+        state: touch
+      notify: "add line"
+      register: output
+    - name: display output
+      debug: msg="outout is {{ output }}"
+

@@ -1,0 +1,10 @@
+---
+- hosts: local
+  become: yes
+  tasks:
+    - name: adding content into default document root
+      lineinfile:
+        path: /var/www/html/index.html
+        line:  " I love you chinni"
+      when:
+        - ansible_hostname == "zithendrareddyms1.mylabserver.com"

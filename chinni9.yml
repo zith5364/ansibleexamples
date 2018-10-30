@@ -1,0 +1,12 @@
+---
+- hosts: local
+  become: yes
+  tasks:
+    - name: creating users using looop
+      user:
+        name: "{{ item }}"
+      with_items:
+        - john
+        - jilebi
+        - chinni
+

@@ -1,0 +1,30 @@
+---
+- hosts: local
+  become: yes
+  handlers:
+    - name: restart httpd
+      service:
+        name: httpd
+        state: restarted
+      listen: "restart httpd"
+    - name: adding line
+      lineinfile:
+        path: /opt/www/index.html
+        line: "I love you chinnii"
+      listen: "add line"
+  tasks:
+    - name: installing httpd
+      yum:
+        name: httpd
+        state: present
+    - name: changing config file
+      replace:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: '^DocumentRoot.*$'
+        replace: 'DocumentRoot "/var/www"'
+      notify: "add line"
+      notify: "restart httpd"
+      register: output
+    - name: display output
+      debug: msg="outout is {{ output }}"
+
